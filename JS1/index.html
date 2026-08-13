@@ -26,7 +26,7 @@
         <tr>
             <td colspan="2">
                 <button id="btn1">Insert</button>
-                <button id="btn2">Clear</button>
+                <button id="btn2">Clear Entry</button>
             </td>
         </tr>
     </table>
@@ -39,6 +39,17 @@
 
     <button id="btn3" style="margin-top: 10px;">Clear Items</button>
     <button id="btn4" style="margin-top: 10px; display: none;">Get Total</button>
+    <button id="btn5" style="margin-top: 10px; display: none;">Identify Highest and Lowest Number</button>
+
+    <span id="sortWrapper" style="margin-left: 10px; display: none;">
+        <label for="selSort">Sort by</label>
+        <select id="selSort">
+            <option value="">Please select</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+    </span>
+
     <script src="main.js"></script>
 </body>
 </html>

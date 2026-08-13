@@ -2,6 +2,9 @@ const btn1 = document.getElementById("btn1");
 const btn2 = document.getElementById("btn2");
 const btn3 = document.getElementById("btn3");
 const btn4 = document.getElementById("btn4");
+const btn5 = document.getElementById("btn5");
+const selSort = document.getElementById("selSort");
+const sortWrapper = document.getElementById("sortWrapper");
 
 const tbl = document.getElementById("tblNumbers");
 
@@ -55,7 +58,9 @@ btn3.addEventListener("click", () => {
     }
 
     document.getElementById("btn4").style.display = "none";
-
+    document.getElementById("btn5").style.display = "none";
+    sortWrapper.style.display = "none";
+    selSort.value = "";
 });
 
 btn4.addEventListener("click", () => {
@@ -74,6 +79,55 @@ btn4.addEventListener("click", () => {
     trTotal.appendChild(tdTotalLabel);
     trTotal.appendChild(tdTotalValue);
     tbl.appendChild(trTotal);
+});
+
+btn5.addEventListener("click", () => {
+    const highest = Math.max(...numbersArr);
+    const lowest = Math.min(...numbersArr);
+
+    const trHighest = document.createElement("tr");
+    const tdHighestLabel = document.createElement("td");
+    const tdHighestValue = document.createElement("td");
+
+    trHighest.style.height = "30px";
+
+    tdHighestLabel.style.fontWeight = "bold";
+    tdHighestLabel.innerHTML = "HIGHEST";
+
+    tdHighestValue.style.textDecoration = "underline";
+    tdHighestValue.innerHTML = highest;
+
+    trHighest.appendChild(tdHighestLabel);
+    trHighest.appendChild(tdHighestValue);
+    tbl.appendChild(trHighest);
+
+    const trLowest = document.createElement("tr");
+    const tdLowestLabel = document.createElement("td");
+    const tdLowestValue = document.createElement("td");
+
+    trLowest.style.height = "30px";
+
+    tdLowestLabel.style.fontWeight = "bold";
+    tdLowestLabel.innerHTML = "LOWEST";
+
+    tdLowestValue.style.textDecoration = "underline";
+    tdLowestValue.innerHTML = lowest;
+
+    trLowest.appendChild(tdLowestLabel);
+    trLowest.appendChild(tdLowestValue);
+    tbl.appendChild(trLowest);
+});
+
+selSort.addEventListener("change", () => {
+    const sortValue = selSort.value;
+
+    if(sortValue == "asc") {
+        numbersArr.sort((a, b) => a - b);
+        iterateNumbers();
+    } else if(sortValue == "desc") {
+        numbersArr.sort((a, b) => b - a);
+        iterateNumbers();
+    }
 });
 
 function deleteNumber(i) {
@@ -154,6 +208,8 @@ function iterateNumbers() {
 
             if(!(numbersArr.length == 0)) {
                 document.getElementById("btn4").style.display = "inline";
+                document.getElementById("btn5").style.display = "inline";
+                sortWrapper.style.display = "inline";
             }
             
             total += numbersArr[i];
@@ -164,7 +220,8 @@ function iterateNumbers() {
     } else {
         total = 0;
         document.getElementById("btn4").style.display = "none";
+        document.getElementById("btn5").style.display = "none";
+        sortWrapper.style.display = "none";
     }
 
 }
-
