@@ -70,7 +70,21 @@
         </table>
     </fieldset>
 
-    <button id="btnClearItems" style="margin-top: 10px;">Clear Records</button>
+    <span id="recordControls" style="display: none;">
+    <button id="btnClearItems" style="margin-top: 10px;" style="display: none;">Clear Records</button>
+        Sort by:
+        <select id="ddlSortField">
+            <option value="">Please select</option>
+            <option value="fname">First Name</option>
+            <option value="lname">Last Name</option>
+        </select>
+        <select id="ddlSortOrder">
+            <option value="">Please select</option>
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+        </select>
+        <button id="btnSaveLocal">Save to Local Storage</button>
+    </span>
     <script src="main.js"></script>
 </body>
 </html>

@@ -1,11 +1,18 @@
 const btnInsertUpdate = document.getElementById("btnInsertUpdate");
 const btnClearItems = document.getElementById("btnClearItems");
 const btnClear = document.getElementById("btnClear");
+const btnSaveLocal = document.getElementById("btnSaveLocal");
+const ddlSortField = document.getElementById("ddlSortField");
+const ddlSortOrder = document.getElementById("ddlSortOrder");
 const tblRecords = document.getElementById("tblRecords");
 
 let arrRecords = new Array();
 const tblTHsLabels = ["First Name", "Middle Name", "Last Name", "Age", "Action"];
 
+const savedRecords = localStorage.getItem("records");
+if(savedRecords) {
+    arrRecords = JSON.parse(savedRecords);
+}
 
 if(arrRecords.length == 0) {
     document.getElementById("status").style.display = "inline";
@@ -13,6 +20,9 @@ if(arrRecords.length == 0) {
 } else {
     document.getElementById("status").style.display = "none";
 }
+document.getElementById("recordControls").style.display = arrRecords.length == 0 ? "none" : "inline";
+
+iterateRecords();
 
 btnInsertUpdate.addEventListener("click", () => {
 
@@ -91,8 +101,11 @@ btnClearItems.addEventListener("click", () => {
         tblRecords.removeChild(tblRecords.firstChild);
     }
 
+    localStorage.removeItem("records");
+
     document.getElementById("status").style.display = "inline";
     document.getElementById("status").innerHTML = "No Records...";
+    document.getElementById("recordControls").style.display = "none";
 
     btnInsertUpdate.innerHTML = "Insert";
     btnInsertUpdate.value = "insert";
@@ -110,6 +123,7 @@ function iterateRecords() {
     if(!(arrRecords.length == 0)) {
 
         document.getElementById("status").style.display = "none";
+        document.getElementById("recordControls").style.display = "inline";
 
         const tblHeaderRow = document.createElement("tr");
         const tblHeader = document.createElement("thead");
@@ -195,7 +209,40 @@ function iterateRecords() {
     } else {
         document.getElementById("status").style.display = "inline";
         document.getElementById("status").innerHTML = "No Records...";
+        document.getElementById("recordControls").style.display = "none";
     }
+}
+
+btnSaveLocal.addEventListener("click", () => {
+    localStorage.setItem("records", JSON.stringify(arrRecords));
+    alert("Record Successfully Saved to Local Storage!");
+});
+
+ddlSortField.addEventListener("change", sortRecords);
+ddlSortOrder.addEventListener("change", sortRecords);
+
+function sortRecords() {
+    const field = ddlSortField.value;
+    const order = ddlSortOrder.value;
+
+    if(field == "" || order == "") {
+        return;
+    }
+
+    arrRecords.sort((a, b) => {
+        const valA = a[field].toLowerCase();
+        const valB = b[field].toLowerCase();
+
+        if(valA < valB) {
+            return order == "asc" ? -1 : 1;
+        }
+        if(valA > valB) {
+            return order == "asc" ? 1 : -1;
+        }
+        return 0;
+    });
+
+    iterateRecords();
 }
 
 function deleteData(i) {
